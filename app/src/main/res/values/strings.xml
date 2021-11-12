@@ -2,4 +2,8 @@
     <string name="app_name">LoginCompose</string>
     <string name="password_visible_content_description">Hide password</string>
     <string name="password_hidden_content_description"><![CDATA[Show password<]]></string>
+    <string name="login_hint">Username / E-Mail</string>
+    <string name="password_hint">Password</string>
+    <string name="error_field_empty">This field can\'t be empty</string>
+    <string name="error_unknown">Unknown error</string>
 </resources>

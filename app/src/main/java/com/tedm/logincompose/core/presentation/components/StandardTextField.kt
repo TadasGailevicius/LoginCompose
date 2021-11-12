@@ -40,6 +40,7 @@ fun StandardTextField(
     leadingIcon: ImageVector? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordToggleDisplayed: Boolean = keyboardType == KeyboardType.Password,
+    isPasswordVisible: Boolean = false,
     showPasswordToggle: Boolean = false,
     onPasswordToggleClick: (Boolean) -> Unit = {},
     onValueChange: (String) -> Unit
