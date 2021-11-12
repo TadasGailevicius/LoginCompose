@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LoginCompose</string>
+    <string name="password_visible_content_description">Hide password</string>
+    <string name="password_hidden_content_description"><![CDATA[Show password<]]></string>
 </resources>
