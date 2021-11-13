@@ -1,4 +1,4 @@
-package com.tedm.logincompose.ui.theme
+package com.tedm.logincompose.core.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
