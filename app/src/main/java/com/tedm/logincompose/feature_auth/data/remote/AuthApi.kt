@@ -14,9 +14,6 @@ interface AuthApi {
         @Body request: LoginRequest
     ): BasicApiResponse<AuthResponse>
 
-    @GET("/api/user/authenticate")
-    suspend fun authenticate()
-
     companion object {
         const val BASE_URL = "https://vidqjclbhmef.herokuapp.com/"
     }

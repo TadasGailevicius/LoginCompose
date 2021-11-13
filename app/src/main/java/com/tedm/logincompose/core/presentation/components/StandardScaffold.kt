@@ -2,6 +2,7 @@ package com.tedm.logincompose.core.presentation.components
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.Scaffold
+import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -10,6 +11,7 @@ import androidx.navigation.NavController
 fun StandardScaffold(
     navController: NavController,
     modifier: Modifier = Modifier,
+    state: ScaffoldState,
     showToolbar: Boolean = true,
     showBackArrow: Boolean = true,
     navActions: @Composable RowScope.() -> Unit = {},
@@ -17,7 +19,8 @@ fun StandardScaffold(
     content: @Composable () -> Unit
 ) {
     Scaffold(
-        modifier = modifier
+        modifier = modifier,
+        scaffoldState = state,
     ) {
         content()
     }

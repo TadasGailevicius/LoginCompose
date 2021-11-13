@@ -17,8 +17,11 @@ class AuthRepositoryImpl (
     private val sharedPreferences: SharedPreferences
 ) : AuthRepository {
 
-    override suspend fun login(email: String, password: String): SimpleResource {
-        val request = LoginRequest(email, password)
+    override suspend fun login(username: String, password: String): SimpleResource {
+        val request = LoginRequest(
+            username = username,
+            password = password
+        )
         return try {
             val response = api.login(request)
             if(response.successful) {
@@ -43,20 +46,4 @@ class AuthRepositoryImpl (
             )
         }
     }
-
-    override suspend fun authenticate(): SimpleResource {
-        return try {
-            api.authenticate()
-            Resource.Success(Unit)
-        } catch(e: IOException) {
-            Resource.Error(
-                uiText = UiText.StringResource(R.string.error_couldnt_reach_server)
-            )
-        } catch(e: HttpException) {
-            Resource.Error(
-                uiText = UiText.StringResource(R.string.oops_something_went_wrong)
-            )
-        }
-    }
-
 }

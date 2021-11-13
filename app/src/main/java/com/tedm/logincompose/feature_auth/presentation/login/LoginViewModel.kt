@@ -36,7 +36,7 @@ class LoginViewModel @Inject constructor(
         when(event) {
             is LoginEvent.EnteredEmail -> {
                 _emailState.value = emailState.value.copy(
-                    text = event.email
+                    text = event.username
                 )
             }
             is LoginEvent.EnteredPassword -> {
@@ -53,7 +53,7 @@ class LoginViewModel @Inject constructor(
                 viewModelScope.launch {
                     _loginState.value = loginState.value.copy(isLoading = true)
                     val loginResult = loginUseCase(
-                        email = emailState.value.text,
+                        username = emailState.value.text,
                         password = passwordState.value.text
                     )
                     _loginState.value = loginState.value.copy(isLoading = false)

@@ -3,6 +3,7 @@ package com.tedm.logincompose.di
 import android.app.Application
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
+import com.google.gson.Gson
 import com.tedm.logincompose.core.util.Constants
 import dagger.Module
 import dagger.Provides
@@ -42,5 +43,11 @@ object AppModule {
                 }
             )
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return Gson()
     }
 }
