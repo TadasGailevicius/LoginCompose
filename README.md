@@ -13,7 +13,7 @@ Login App Using Jetpack Compose
   - MVVM Architecture  
 - Dagger-Hilt for dependency injection.
 - [Retrofit2 & OkHttp3](https://github.com/square/retrofit) - Construct the REST APIs
-- Room - Local database, store weather history
+- Room - Local database
 - Coil - Image loading library
 - [Timber](https://github.com/JakeWharton/timber) - Logging.
 
