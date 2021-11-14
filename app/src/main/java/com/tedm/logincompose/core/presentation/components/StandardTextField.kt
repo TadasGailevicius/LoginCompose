@@ -41,7 +41,6 @@ fun StandardTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordToggleDisplayed: Boolean = keyboardType == KeyboardType.Password,
     isPasswordVisible: Boolean = false,
-    showPasswordToggle: Boolean = false,
     onPasswordToggleClick: (Boolean) -> Unit = {},
     onValueChange: (String) -> Unit
 ) {
@@ -68,7 +67,7 @@ fun StandardTextField(
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType
             ),
-            visualTransformation = if (!showPasswordToggle && isPasswordToggleDisplayed) {
+            visualTransformation = if (!isPasswordVisible && isPasswordToggleDisplayed) {
                 PasswordVisualTransformation()
             } else {
                 VisualTransformation.None
@@ -89,7 +88,7 @@ fun StandardTextField(
                 val icon: @Composable () -> Unit = {
                     IconButton(
                         onClick = {
-                            onPasswordToggleClick(!showPasswordToggle)
+                            onPasswordToggleClick(!isPasswordVisible)
                         },
                         modifier = Modifier
                             .semantics {
@@ -97,13 +96,13 @@ fun StandardTextField(
                             }
                     ) {
                         Icon(
-                            imageVector = if (showPasswordToggle) {
+                            imageVector = if (isPasswordVisible) {
                                 Icons.Filled.VisibilityOff
                             } else {
                                 Icons.Filled.Visibility
                             },
                             tint = Color.White,
-                            contentDescription = if (showPasswordToggle) {
+                            contentDescription = if (isPasswordVisible) {
                                 stringResource(id = R.string.password_visible_content_description)
                             } else {
                                 stringResource(id = R.string.password_hidden_content_description)

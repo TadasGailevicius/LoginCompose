@@ -8,10 +8,27 @@ class LoginUseCase(
     private val repository: AuthRepository
 ) {
     suspend operator fun invoke(username: String, password: String): LoginResult {
-        val emailError = if(username.isBlank()) AuthError.FieldEmpty else null
-        val passwordError = if(password.isBlank()) AuthError.FieldEmpty else null
+        val emailError = when {
+            username.isBlank() -> {
+                AuthError.FieldEmpty
+            }
+            username.length < 3 -> {
+                AuthError.InputTooShort
+            }
+            else -> null
+        }
+        val passwordError =
+            when {
+                password.isBlank() -> {
+                    AuthError.FieldEmpty
+                }
+                password.length < 3 -> {
+                    AuthError.InputTooShort
+                }
+                else -> null
+            }
 
-        if(emailError != null || passwordError != null) {
+        if (emailError != null || passwordError != null) {
             return LoginResult(emailError, passwordError)
         }
 

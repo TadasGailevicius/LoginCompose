@@ -13,12 +13,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.tedm.logincompose.core.presentation.components.StandardTextField
 import com.tedm.logincompose.core.presentation.ui.theme.SpaceLarge
 import com.tedm.logincompose.core.presentation.ui.theme.SpaceMedium
 import com.tedm.logincompose.R
+import com.tedm.logincompose.core.presentation.components.CustomButton
 import com.tedm.logincompose.core.presentation.util.UiEvent
 import com.tedm.logincompose.core.presentation.util.asString
 import com.tedm.logincompose.core.util.Constants.LOGO_URL
@@ -67,6 +67,7 @@ fun LoginScreen(
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
+            horizontalAlignment = CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.Center),
@@ -91,6 +92,7 @@ fun LoginScreen(
                 keyboardType = KeyboardType.Email,
                 error = when (emailState.error) {
                     is AuthError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                    is AuthError.InputTooShort -> stringResource(id = R.string.username_too_short)
                     else -> ""
                 },
                 hint = stringResource(id = R.string.login_hint)
@@ -105,6 +107,7 @@ fun LoginScreen(
                 keyboardType = KeyboardType.Password,
                 error = when (passwordState.error) {
                     is AuthError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                    is AuthError.InputTooShort -> stringResource(id = R.string.password_too_short)
                     else -> ""
                 },
                 isPasswordVisible = state.isPasswordVisible,
@@ -113,19 +116,11 @@ fun LoginScreen(
                 }
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
-            Button(
-                onClick = {
+            CustomButton(
+                onButtonClick = {
                     viewModel.onEvent(LoginEvent.Login)
-                },
-                modifier = Modifier
-                    .align(CenterHorizontally)
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = stringResource(id = R.string.login),
-                    color = MaterialTheme.colors.onPrimary
-                )
-            }
+                }
+            )
             if (state.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(CenterHorizontally))
             }
