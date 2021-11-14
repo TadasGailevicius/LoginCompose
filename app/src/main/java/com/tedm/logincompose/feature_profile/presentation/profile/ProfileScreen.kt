@@ -2,23 +2,47 @@ package com.tedm.logincompose.feature_profile.presentation.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.tedm.logincompose.core.presentation.ui.theme.SpaceLarge
+import com.tedm.logincompose.core.presentation.util.UiEvent
+import com.tedm.logincompose.core.presentation.util.asString
 import com.tedm.logincompose.core.util.Constants
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun ProfileScreen(
+    scaffoldState: ScaffoldState,
     navController: NavController,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state.value
+
+    val context = LocalContext.current
+    LaunchedEffect(key1 = true) {
+        viewModel.getProfile()
+        viewModel.eventFlow.collectLatest { event ->
+            when (event) {
+                is UiEvent.ShowSnackbar -> {
+                    scaffoldState.snackbarHostState.showSnackbar(
+                        message = event.uiText.asString(context)
+                    )
+                }
+            }
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -40,17 +64,39 @@ fun ProfileScreen(
                     .align(Alignment.CenterHorizontally),
             ) {
                 Image(
-                    painter = rememberImagePainter(Constants.LOGO_URL),
+                    painter = rememberImagePainter(state.profile?.image),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(128.dp)
+                        .size(256.dp)
                 )
             }
-            Text(text = "Name")
             Spacer(modifier = Modifier.height(SpaceLarge))
-            Text(text = "Address")
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
+            ) {
+                Text(
+                    text = state.profile?.fullName ?: ""
+                )
+            }
             Spacer(modifier = Modifier.height(SpaceLarge))
-            Text(text = "+37060277777")
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
+            ) {
+                Text(
+                    text = state.profile?.address ?: ""
+                )
+            }
+            Spacer(modifier = Modifier.height(SpaceLarge))
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
+            ) {
+                Text(
+                    text = state.profile?.phone ?: ""
+                )
+            }
         }
     }
 

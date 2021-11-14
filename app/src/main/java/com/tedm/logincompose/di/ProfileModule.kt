@@ -1,6 +1,12 @@
 package com.tedm.logincompose.di
 
+import android.content.SharedPreferences
+import com.tedm.logincompose.feature_profile.data.repository.ProfileRepositoryImpl
 import com.tedm.logincompose.feature_profile.domain.data.remote.ProfileApi
+import com.tedm.logincompose.feature_profile.domain.repository.ProfileRepository
+import com.tedm.logincompose.feature_profile.domain.use_case.GetProfileUseCase
+import com.tedm.logincompose.feature_profile.domain.use_case.LogoutUseCase
+import com.tedm.logincompose.feature_profile.domain.use_case.ProfileUseCases
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,5 +28,20 @@ object ProfileModule {
             .client(client)
             .build()
             .create(ProfileApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileRepository(profileApi: ProfileApi, sharedPreferences: SharedPreferences): ProfileRepository {
+        return ProfileRepositoryImpl(profileApi, sharedPreferences)
+    }
+
+    @Provides
+    @Singleton
+    fun provideProfileUseCases(repository: ProfileRepository): ProfileUseCases {
+        return ProfileUseCases(
+            getProfile = GetProfileUseCase(repository),
+            logout = LogoutUseCase(repository)
+        )
     }
 }
