@@ -1,6 +1,7 @@
 package com.tedm.logincompose.feature_auth.domain.repository
 
 import com.tedm.logincompose.core.util.SimpleResource
+import retrofit2.http.GET
 
 interface AuthRepository {
 
@@ -8,4 +9,6 @@ interface AuthRepository {
         email: String,
         password: String
     ): SimpleResource
+
+    suspend fun authenticate(): SimpleResource
 }

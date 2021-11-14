@@ -8,15 +8,17 @@ import com.tedm.logincompose.feature_profile.domain.repository.ProfileRepository
 import com.tedm.logincompose.R
 import com.tedm.logincompose.core.util.Constants
 import com.tedm.logincompose.core.util.UiText
+import com.tedm.logincompose.feature_auth.data.local.UserDao
 import retrofit2.HttpException
 import java.io.IOException
 
 class ProfileRepositoryImpl(
     private val profileApi: ProfileApi,
+    private val dao: UserDao,
     private val sharedPreferences: SharedPreferences
 ) : ProfileRepository {
     
-    override suspend fun getProfile(): Resource<Profile> {
+     override suspend fun getProfile(): Resource<Profile> {
         val response = try {
             profileApi.getProfile()
         } catch (e: Exception) {
@@ -37,5 +39,9 @@ class ProfileRepositoryImpl(
         sharedPreferences.edit()
             .remove(Constants.KEY_JWT_TOKEN)
             .apply()
+    }
+
+    override suspend fun deleteUser(){
+        dao.deleteUserById(0)
     }
 }

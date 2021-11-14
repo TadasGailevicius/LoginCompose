@@ -8,6 +8,7 @@ import com.tedm.logincompose.core.presentation.util.UiEvent
 import com.tedm.logincompose.core.util.Event
 import com.tedm.logincompose.core.util.Resource
 import com.tedm.logincompose.core.util.UiText
+import com.tedm.logincompose.feature_profile.domain.repository.ProfileRepository
 import com.tedm.logincompose.feature_profile.domain.use_case.ProfileUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -18,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val profileUseCases: ProfileUseCases,
+    private val repository: ProfileRepository,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(ProfileState())
@@ -30,6 +32,9 @@ class ProfileViewModel @Inject constructor(
         when (event) {
             is ProfileEvent.Logout -> {
                 profileUseCases.logout()
+                viewModelScope.launch {
+                    repository.deleteUser()
+                }
             }
             ProfileEvent.ShowLogoutDialog -> {
                 _state.value = state.value.copy(

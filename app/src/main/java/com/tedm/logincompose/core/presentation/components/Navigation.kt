@@ -12,8 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.tedm.logincompose.core.util.Screen
 import com.tedm.logincompose.feature_auth.presentation.login.LoginScreen
+import com.tedm.logincompose.feature_auth.presentation.splash.SplashScreen
 import com.tedm.logincompose.feature_profile.presentation.profile.ProfileScreen
-import com.tedm.logincompose.feature_splash.presentation.SplashScreen
 
 @Composable
 fun Navigation(
@@ -35,7 +35,10 @@ fun Navigation(
             )
     ) {
         composable(Screen.SplashScreen.route) {
-            SplashScreen(navController = navController)
+            SplashScreen(
+                onPopBackStack = navController::popBackStack,
+                onNavigate = navController::navigate,
+            )
         }
         composable(Screen.LoginScreen.route) {
             LoginScreen(

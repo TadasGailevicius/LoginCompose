@@ -8,4 +8,6 @@ interface ProfileRepository {
     suspend fun getProfile(): Resource<Profile>
 
     fun logout()
+
+    suspend fun deleteUser()
 }

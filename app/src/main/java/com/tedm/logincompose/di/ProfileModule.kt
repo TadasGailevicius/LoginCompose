@@ -1,6 +1,7 @@
 package com.tedm.logincompose.di
 
 import android.content.SharedPreferences
+import com.tedm.logincompose.feature_auth.data.local.UserDao
 import com.tedm.logincompose.feature_profile.data.repository.ProfileRepositoryImpl
 import com.tedm.logincompose.feature_profile.domain.data.remote.ProfileApi
 import com.tedm.logincompose.feature_profile.domain.repository.ProfileRepository
@@ -32,8 +33,8 @@ object ProfileModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(profileApi: ProfileApi, sharedPreferences: SharedPreferences): ProfileRepository {
-        return ProfileRepositoryImpl(profileApi, sharedPreferences)
+    fun provideProfileRepository(profileApi: ProfileApi, dao: UserDao, sharedPreferences: SharedPreferences): ProfileRepository {
+        return ProfileRepositoryImpl(profileApi, dao, sharedPreferences)
     }
 
     @Provides

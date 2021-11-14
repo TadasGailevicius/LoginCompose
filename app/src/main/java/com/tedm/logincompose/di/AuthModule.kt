@@ -1,9 +1,11 @@
 package com.tedm.logincompose.di
 
 import android.content.SharedPreferences
+import com.tedm.logincompose.feature_auth.data.local.UserDao
 import com.tedm.logincompose.feature_auth.data.remote.AuthApi
 import com.tedm.logincompose.feature_auth.data.repository.AuthRepositoryImpl
 import com.tedm.logincompose.feature_auth.domain.repository.AuthRepository
+import com.tedm.logincompose.feature_auth.domain.use_case.AuthenticateUseCase
 import com.tedm.logincompose.feature_auth.domain.use_case.LoginUseCase
 import dagger.Module
 import dagger.Provides
@@ -30,13 +32,19 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(api: AuthApi, sharedPreferences: SharedPreferences): AuthRepository {
-        return AuthRepositoryImpl(api, sharedPreferences)
+    fun provideAuthRepository(api: AuthApi,dao: UserDao,sharedPreferences: SharedPreferences): AuthRepository {
+        return AuthRepositoryImpl(api,dao, sharedPreferences)
     }
 
     @Provides
     @Singleton
     fun provideLoginUseCase(repository: AuthRepository): LoginUseCase {
         return LoginUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthenticationUseCase(repository: AuthRepository): AuthenticateUseCase {
+        return AuthenticateUseCase(repository)
     }
 }

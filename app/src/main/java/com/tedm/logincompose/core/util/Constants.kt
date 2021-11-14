@@ -9,4 +9,6 @@ object Constants {
     const val KEY_JWT_TOKEN = "jwt_token"
 
     const val SHARED_PREF_NAME = "shared_pref"
+
+    const val DATABASE_NAME = "user_db"
 }

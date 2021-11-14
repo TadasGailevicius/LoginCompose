@@ -8,12 +8,16 @@ import com.tedm.logincompose.feature_auth.data.remote.AuthApi
 import com.tedm.logincompose.feature_auth.data.remote.request.LoginRequest
 import com.tedm.logincompose.R
 import com.tedm.logincompose.core.util.Constants
+import com.tedm.logincompose.feature_auth.data.local.UserDao
+import com.tedm.logincompose.feature_auth.data.local.entities.User
 import com.tedm.logincompose.feature_auth.domain.repository.AuthRepository
+import okhttp3.OkHttpClient
 import retrofit2.HttpException
 import java.io.IOException
 
 class AuthRepositoryImpl(
     private val api: AuthApi,
+    private val dao: UserDao,
     private val sharedPreferences: SharedPreferences
 ) : AuthRepository {
     override suspend fun login(username: String, password: String): SimpleResource {
@@ -34,9 +38,43 @@ class AuthRepositoryImpl(
                 uiText = UiText.StringResource(R.string.oops_something_went_wrong)
             )
         }
+        dao.insertUser(
+            User(
+                username = username,
+                password = password,
+                id = 0
+            )
+        )
         sharedPreferences.edit()
             .putString(Constants.KEY_JWT_TOKEN, response.token)
             .apply()
         return Resource.Success(Unit)
+    }
+
+    override suspend fun authenticate(): SimpleResource {
+        val user = dao.getUserById(0)
+        if (user != null) {
+            return try {
+                api.login(
+                    LoginRequest(
+                        user.username,
+                        user.password
+                    )
+                )
+                Resource.Success(Unit)
+            } catch (e: IOException) {
+                Resource.Error(
+                    uiText = UiText.StringResource(R.string.error_couldnt_reach_server)
+                )
+            } catch (e: HttpException) {
+                Resource.Error(
+                    uiText = UiText.StringResource(R.string.oops_something_went_wrong)
+                )
+            }
+        } else {
+            return Resource.Error(
+                uiText = UiText.StringResource(R.string.oops_something_went_wrong)
+            )
+        }
     }
 }
