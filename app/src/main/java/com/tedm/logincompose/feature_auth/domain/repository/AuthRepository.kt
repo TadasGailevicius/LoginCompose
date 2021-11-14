@@ -1,7 +1,6 @@
 package com.tedm.logincompose.feature_auth.domain.repository
 
 import com.tedm.logincompose.core.util.SimpleResource
-import retrofit2.http.GET
 
 interface AuthRepository {
 

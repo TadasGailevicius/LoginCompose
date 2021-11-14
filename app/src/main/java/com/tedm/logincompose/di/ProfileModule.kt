@@ -33,7 +33,11 @@ object ProfileModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(profileApi: ProfileApi, dao: UserDao, sharedPreferences: SharedPreferences): ProfileRepository {
+    fun provideProfileRepository(
+        profileApi: ProfileApi,
+        dao: UserDao,
+        sharedPreferences: SharedPreferences
+    ): ProfileRepository {
         return ProfileRepositoryImpl(profileApi, dao, sharedPreferences)
     }
 

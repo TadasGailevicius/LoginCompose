@@ -24,7 +24,7 @@ fun CustomButton(
     onButtonClick: () -> Unit = {}
 ) {
     Box(
-        modifier = androidx.compose.ui.Modifier
+        modifier = Modifier
             .padding(SpaceSmall)
     ) {
         Column(

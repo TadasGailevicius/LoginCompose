@@ -54,8 +54,7 @@ class ProfileViewModel @Inject constructor(
             _state.value = state.value.copy(
                 isLoading = true
             )
-            val result = profileUseCases.getProfile()
-            when (result) {
+            when (val result = profileUseCases.getProfile()) {
                 is Resource.Success -> {
                     _state.value = state.value.copy(
                         profile = result.data,

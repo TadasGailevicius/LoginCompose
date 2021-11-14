@@ -11,7 +11,6 @@ import com.tedm.logincompose.core.util.Constants
 import com.tedm.logincompose.feature_auth.data.local.UserDao
 import com.tedm.logincompose.feature_auth.data.local.entities.User
 import com.tedm.logincompose.feature_auth.domain.repository.AuthRepository
-import okhttp3.OkHttpClient
 import retrofit2.HttpException
 import java.io.IOException
 

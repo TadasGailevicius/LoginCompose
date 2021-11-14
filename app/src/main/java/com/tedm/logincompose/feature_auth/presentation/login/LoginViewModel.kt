@@ -18,7 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase
-) :ViewModel() {
+) : ViewModel() {
 
     private val _emailState = mutableStateOf(StandardTextFieldState())
     val emailState: State<StandardTextFieldState> = _emailState
@@ -33,7 +33,7 @@ class LoginViewModel @Inject constructor(
     val eventFlow = _eventFlow.asSharedFlow()
 
     fun onEvent(event: LoginEvent) {
-        when(event) {
+        when (event) {
             is LoginEvent.EnteredEmail -> {
                 _emailState.value = emailState.value.copy(
                     text = event.username,
@@ -59,17 +59,17 @@ class LoginViewModel @Inject constructor(
                         password = passwordState.value.text
                     )
                     _loginState.value = loginState.value.copy(isLoading = false)
-                    if(loginResult.emailError != null) {
+                    if (loginResult.emailError != null) {
                         _emailState.value = emailState.value.copy(
                             error = loginResult.emailError
                         )
                     }
-                    if(loginResult.passwordError != null) {
+                    if (loginResult.passwordError != null) {
                         _passwordState.value = _passwordState.value.copy(
                             error = loginResult.passwordError
                         )
                     }
-                    when(loginResult.result) {
+                    when (loginResult.result) {
                         is Resource.Success -> {
                             _eventFlow.emit(UiEvent.OnLogin)
                         }

@@ -32,8 +32,12 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(api: AuthApi,dao: UserDao,sharedPreferences: SharedPreferences): AuthRepository {
-        return AuthRepositoryImpl(api,dao, sharedPreferences)
+    fun provideAuthRepository(
+        api: AuthApi,
+        dao: UserDao,
+        sharedPreferences: SharedPreferences
+    ): AuthRepository {
+        return AuthRepositoryImpl(api, dao, sharedPreferences)
     }
 
     @Provides

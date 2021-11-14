@@ -22,7 +22,7 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            when(authenticateUseCase()) {
+            when (authenticateUseCase()) {
                 is Resource.Success -> {
                     _eventFlow.emit(
                         UiEvent.Navigate(Screen.ProfileScreen.route)

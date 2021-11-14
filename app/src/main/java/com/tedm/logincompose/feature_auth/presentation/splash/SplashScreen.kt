@@ -14,15 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.tedm.logincompose.R
 import com.tedm.logincompose.core.presentation.util.UiEvent
-import com.tedm.logincompose.core.util.Constants.SPLASH_SCREEN_DURATION
-import com.tedm.logincompose.core.util.Screen
-import com.tedm.logincompose.feature_auth.presentation.splash.SplashViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.withContext
 
@@ -54,7 +49,7 @@ fun SplashScreen(
     }
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
-            when(event) {
+            when (event) {
                 is UiEvent.Navigate -> {
                     onPopBackStack()
                     onNavigate(event.route)

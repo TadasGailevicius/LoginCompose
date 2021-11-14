@@ -17,8 +17,8 @@ class ProfileRepositoryImpl(
     private val dao: UserDao,
     private val sharedPreferences: SharedPreferences
 ) : ProfileRepository {
-    
-     override suspend fun getProfile(): Resource<Profile> {
+
+    override suspend fun getProfile(): Resource<Profile> {
         val response = try {
             profileApi.getProfile()
         } catch (e: Exception) {
@@ -41,7 +41,7 @@ class ProfileRepositoryImpl(
             .apply()
     }
 
-    override suspend fun deleteUser(){
+    override suspend fun deleteUser() {
         dao.deleteUserById(0)
     }
 }

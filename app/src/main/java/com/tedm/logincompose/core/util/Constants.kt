@@ -2,8 +2,6 @@ package com.tedm.logincompose.core.util
 
 object Constants {
 
-    const val SPLASH_SCREEN_DURATION = 0L
-
     const val LOGO_URL = "https://placeimg.com/80/80/tech"
 
     const val KEY_JWT_TOKEN = "jwt_token"
