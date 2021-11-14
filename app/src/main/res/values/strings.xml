@@ -12,4 +12,6 @@
     <string name="do_you_want_to_logout">Do you want to logout?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="password_too_short">The password should contain at least 3 characters</string>
+    <string name="username_too_short">The username/email should contain at least 3 characters</string>
 </resources>

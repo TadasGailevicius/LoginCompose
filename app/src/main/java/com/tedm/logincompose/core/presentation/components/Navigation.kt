@@ -28,8 +28,8 @@ fun Navigation(
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        Color(0xFF01B09A),
-                        Color(0xFF96C93D)
+                        Color(0xFF009ffd),
+                        Color(0xFF2a2a72)
                     )
                 )
             )

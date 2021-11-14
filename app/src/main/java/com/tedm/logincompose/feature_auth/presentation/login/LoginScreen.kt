@@ -93,6 +93,7 @@ fun LoginScreen(
                 keyboardType = KeyboardType.Email,
                 error = when (emailState.error) {
                     is AuthError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                    is AuthError.InputTooShort -> stringResource(id = R.string.username_too_short)
                     else -> ""
                 },
                 hint = stringResource(id = R.string.login_hint)
@@ -107,6 +108,7 @@ fun LoginScreen(
                 keyboardType = KeyboardType.Password,
                 error = when (passwordState.error) {
                     is AuthError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
+                    is AuthError.InputTooShort -> stringResource(id = R.string.password_too_short)
                     else -> ""
                 },
                 isPasswordVisible = state.isPasswordVisible,

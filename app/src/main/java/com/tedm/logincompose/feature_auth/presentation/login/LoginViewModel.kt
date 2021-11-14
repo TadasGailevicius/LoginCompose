@@ -36,12 +36,14 @@ class LoginViewModel @Inject constructor(
         when(event) {
             is LoginEvent.EnteredEmail -> {
                 _emailState.value = emailState.value.copy(
-                    text = event.username
+                    text = event.username,
+                    error = null
                 )
             }
             is LoginEvent.EnteredPassword -> {
                 _passwordState.value = passwordState.value.copy(
-                    text = event.password
+                    text = event.password,
+                    error = null
                 )
             }
             is LoginEvent.TogglePasswordVisibility -> {
