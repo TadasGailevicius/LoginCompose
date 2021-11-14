@@ -17,5 +17,5 @@ Login App Using Jetpack Compose
 - Coil - Image loading library
 - [Timber](https://github.com/JakeWharton/timber) - Logging.
 
-## API
-https://app.swaggerhub.com/apis-docs/NFQ5/Application/1.0.0-oas3
+## Server
+https://vidqjclbhmef.herokuapp.com/
