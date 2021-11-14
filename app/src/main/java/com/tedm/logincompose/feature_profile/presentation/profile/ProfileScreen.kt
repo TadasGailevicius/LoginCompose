@@ -4,9 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -20,13 +18,13 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.tedm.logincompose.core.presentation.components.CustomButton
 import com.tedm.logincompose.core.presentation.ui.theme.SpaceLarge
 import com.tedm.logincompose.core.presentation.ui.theme.SpaceMedium
 import com.tedm.logincompose.core.presentation.util.UiEvent
 import com.tedm.logincompose.core.presentation.util.asString
 import kotlinx.coroutines.flow.collectLatest
 import com.tedm.logincompose.R
+import com.tedm.logincompose.core.presentation.components.StandardToolbar
 
 @Composable
 fun ProfileScreen(
@@ -50,6 +48,21 @@ fun ProfileScreen(
             }
         }
     }
+
+    StandardToolbar(
+        navController = navController,
+        modifier = Modifier.fillMaxWidth(),
+        showBackArrow = true,
+        navActions = {
+            Text(
+                text = "Logout",
+                modifier = Modifier.clickable {
+                    viewModel.onEvent(ProfileEvent.ShowLogoutDialog)
+                }
+                    .padding(end = SpaceMedium)
+            )
+        }
+    )
 
     Box(
         modifier = Modifier
@@ -103,17 +116,6 @@ fun ProfileScreen(
             ) {
                 Text(
                     text = state.profile?.phone ?: ""
-                )
-            }
-            Spacer(modifier = Modifier.height(SpaceLarge))
-            Row(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally),
-            ) {
-                CustomButton(
-                    onButtonClick = {
-                        viewModel.onEvent(ProfileEvent.ShowLogoutDialog)
-                    }
                 )
             }
         }
