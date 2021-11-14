@@ -1,9 +1,12 @@
 package com.tedm.logincompose.core.presentation.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -20,7 +23,16 @@ fun Navigation(
     NavHost(
         navController = navController,
         startDestination = Screen.SplashScreen.route,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFF01B09A),
+                        Color(0xFF96C93D)
+                    )
+                )
+            )
     ) {
         composable(Screen.SplashScreen.route) {
             SplashScreen(navController = navController)

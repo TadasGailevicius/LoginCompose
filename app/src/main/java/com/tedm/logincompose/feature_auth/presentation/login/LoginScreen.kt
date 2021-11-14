@@ -19,6 +19,7 @@ import com.tedm.logincompose.core.presentation.components.StandardTextField
 import com.tedm.logincompose.core.presentation.ui.theme.SpaceLarge
 import com.tedm.logincompose.core.presentation.ui.theme.SpaceMedium
 import com.tedm.logincompose.R
+import com.tedm.logincompose.core.presentation.components.CustomButton
 import com.tedm.logincompose.core.presentation.util.UiEvent
 import com.tedm.logincompose.core.presentation.util.asString
 import com.tedm.logincompose.core.util.Constants.LOGO_URL
@@ -67,6 +68,7 @@ fun LoginScreen(
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
+            horizontalAlignment = CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
                 .align(Alignment.Center),
@@ -113,19 +115,11 @@ fun LoginScreen(
                 }
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
-            Button(
-                onClick = {
+            CustomButton(
+                onButtonClick = {
                     viewModel.onEvent(LoginEvent.Login)
-                },
-                modifier = Modifier
-                    .align(CenterHorizontally)
-                    .fillMaxWidth()
-            ) {
-                Text(
-                    text = stringResource(id = R.string.login),
-                    color = MaterialTheme.colors.onPrimary
-                )
-            }
+                }
+            )
             if (state.isLoading) {
                 CircularProgressIndicator(modifier = Modifier.align(CenterHorizontally))
             }
