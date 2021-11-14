@@ -51,7 +51,13 @@ fun Navigation(
             )
         }
         composable(Screen.ProfileScreen.route) {
-            ProfileScreen(navController = navController, scaffoldState = scaffoldState)
+            ProfileScreen(
+                navController = navController,
+                onLogout = {
+                    navController.navigate(route = Screen.LoginScreen.route)
+                },
+                scaffoldState = scaffoldState
+            )
         }
 
     }

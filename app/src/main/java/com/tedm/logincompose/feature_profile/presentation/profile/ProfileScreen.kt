@@ -1,6 +1,8 @@
 package com.tedm.logincompose.feature_profile.presentation.profile
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
@@ -8,23 +10,29 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.End
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.tedm.logincompose.core.presentation.components.CustomButton
 import com.tedm.logincompose.core.presentation.ui.theme.SpaceLarge
+import com.tedm.logincompose.core.presentation.ui.theme.SpaceMedium
 import com.tedm.logincompose.core.presentation.util.UiEvent
 import com.tedm.logincompose.core.presentation.util.asString
-import com.tedm.logincompose.core.util.Constants
 import kotlinx.coroutines.flow.collectLatest
+import com.tedm.logincompose.R
 
 @Composable
 fun ProfileScreen(
     scaffoldState: ScaffoldState,
     navController: NavController,
+    onLogout: () -> Unit = {},
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
@@ -97,7 +105,59 @@ fun ProfileScreen(
                     text = state.profile?.phone ?: ""
                 )
             }
+            Spacer(modifier = Modifier.height(SpaceLarge))
+            Row(
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally),
+            ) {
+                CustomButton(
+                    onButtonClick = {
+                        viewModel.onEvent(ProfileEvent.ShowLogoutDialog)
+                    }
+                )
+            }
+        }
+
+        if (state.isLogoutDialogVisible) {
+            Dialog(onDismissRequest = {
+                viewModel.onEvent(ProfileEvent.DismissLogoutDialog)
+            }) {
+                Column(
+                    modifier = Modifier
+                        .background(
+                            color = MaterialTheme.colors.surface,
+                            shape = MaterialTheme.shapes.medium
+                        )
+                        .padding(SpaceMedium)
+                ) {
+                    Text(text = stringResource(id = R.string.do_you_want_to_logout))
+                    Spacer(modifier = Modifier.height(SpaceMedium))
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        modifier = Modifier.align(End)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.no).uppercase(),
+                            color = MaterialTheme.colors.onBackground,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.clickable {
+                                viewModel.onEvent(ProfileEvent.DismissLogoutDialog)
+                            }
+                        )
+                        Spacer(modifier = Modifier.width(SpaceMedium))
+                        Text(
+                            text = stringResource(id = R.string.yes).uppercase(),
+                            color = MaterialTheme.colors.primary,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.clickable {
+                                viewModel.onEvent(ProfileEvent.Logout)
+                                viewModel.onEvent(ProfileEvent.DismissLogoutDialog)
+                                onLogout()
+                            }
+                        )
+                    }
+                }
+            }
         }
     }
-
 }

@@ -26,6 +26,24 @@ class ProfileViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<Event>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    fun onEvent(event: ProfileEvent) {
+        when (event) {
+            is ProfileEvent.Logout -> {
+                profileUseCases.logout()
+            }
+            ProfileEvent.ShowLogoutDialog -> {
+                _state.value = state.value.copy(
+                    isLogoutDialogVisible = true
+                )
+            }
+            is ProfileEvent.DismissLogoutDialog -> {
+                _state.value = state.value.copy(
+                    isLogoutDialogVisible = false
+                )
+            }
+        }
+    }
+
     fun getProfile() {
         viewModelScope.launch {
             _state.value = state.value.copy(
