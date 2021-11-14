@@ -39,7 +39,7 @@ fun Navigation(
             )
         }
         composable(Screen.ProfileScreen.route) {
-            ProfileScreen(navController = navController)
+            ProfileScreen(navController = navController, scaffoldState = scaffoldState)
         }
 
     }
